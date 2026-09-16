@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  muyuapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: muyuapi
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_NAME=MUYU API
+      - APP_ENV=production
+      - DEBUG=false
+      - HOST=0.0.0.0
+      - PORT=8000
+      - API_PREFIX=/api
+      - BASE_URL=https://muyu.tams.my.id
+      - PLAYLIST_CACHE_TTL=86400
+      - STREAM_CACHE_TTL=14400
+    volumes:
+      - ./data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
