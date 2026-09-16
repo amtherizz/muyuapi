@@ -1,3 +1,13 @@
+---
+title: MUYU API
+emoji: 🎵
+colorFrom: purple
+colorTo: blue
+sdk: gradio
+app_file: app.py
+pinned: false
+---
+
 # MUYU API - Backend Service untuk SONIK / BEAT
 
 Backend API berbasis Python (FastAPI & `yt-dlp`) yang dirancang untuk mendukung sinkronisasi playlist YouTube dan pemutaran audio pada aplikasi Android **SONIK / BEAT** (kompatibel dengan ExoPlayer).
