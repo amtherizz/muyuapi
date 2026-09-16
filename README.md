@@ -145,6 +145,49 @@ docker compose logs -f
 
 ---
 
+## 🚂 Panduan Deployment ke Railway (Disarankan)
+
+Backend ini sudah dilengkapi `railway.json` dan `Dockerfile` yang kompatibel penuh dengan Railway.
+
+### Opsi 1: Deploy via GitHub (Paling Praktis)
+1. Push repository ini ke GitHub:
+   ```bash
+   git remote add origin https://github.com/<username>/muyuapi.git
+   git branch -M main
+   git push -u origin main
+   ```
+2. Buka [railway.app](https://railway.app) dan login.
+3. Klik **+ New Project** -> **Deploy from GitHub repo**.
+4. Pilih repository `muyuapi`. Railway akan otomatis mendeteksi `Dockerfile` dan `railway.json`.
+5. *(Sangat Dianjurkan)* **Pasang Persistent Volume untuk Cache**:
+   - Masuk ke service yang baru dibuat -> tab **Settings** / **Volumes**.
+   - Klik **+ Add Volume**, set **Mount Path** ke: `/app/data`
+6. Atur **Environment Variables** di tab **Variables**:
+   - `CACHE_DB_PATH`: `/app/data/cache.db`
+   - `BASE_URL`: `https://muyu.tams.my.id` (atau domain default Railway)
+   - `API_PREFIX`: `/api`
+   - `PLAYLIST_CACHE_TTL`: `86400`
+   - `STREAM_CACHE_TTL`: `14400`
+   - *(Opsional)* `YTDLP_PROXY`: Isi jika menggunakan proxy YouTube.
+7. **Pasang Custom Domain**:
+   - Masuk ke tab **Settings** -> **Custom Domains**.
+   - Masukkan `muyu.tams.my.id` dan arahkan CNAME DNS sesuai petunjuk Railway.
+
+### Opsi 2: Deploy via Railway CLI
+```bash
+# Install Railway CLI
+npm i -g @railway/cli
+
+# Login
+railway login
+
+# Inisialisasi & deploy proyek
+railway init
+railway up
+```
+
+---
+
 ## 🧪 Menjalankan Pengujian (Testing)
 
 Proyek ini telah dilengkapi dengan unit test dan integration test menggunakan `pytest`:
